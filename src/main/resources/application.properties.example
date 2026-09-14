@@ -1,0 +1,9 @@
+spring.application.name=seat-on-wheels
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/seat_on_wheels
+spring.datasource.username=postgres
+spring.datasource.password=PASSword
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
