@@ -4,6 +4,7 @@ import com.vatsalya.seatonwheels.entity.*;
 import com.vatsalya.seatonwheels.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,13 +17,14 @@ public class DataInitializer implements CommandLineRunner {
     private final SeatRepository seatRepository;
     private final TripRepository tripRepository;
     private final TripSeatRepository tripSeatRepository;
+    private final PasswordEncoder passwordEncoder;
     public DataInitializer(
             UserRepository userRepository,
             BusRepository busRepository,
             RouteRepository routeRepository,
             SeatRepository seatRepository,
             TripRepository tripRepository,
-            TripSeatRepository tripSeatRepository
+            TripSeatRepository tripSeatRepository, PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.busRepository = busRepository;
@@ -30,6 +32,7 @@ public class DataInitializer implements CommandLineRunner {
         this.seatRepository = seatRepository;
         this.tripRepository = tripRepository;
         this.tripSeatRepository = tripSeatRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public void run(String... args) {
@@ -41,7 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         User user = new User();
         user.setName("Vatsalya Bajpai");
         user.setEmail("vatsalya@example.com");
-        user.setPassword("password123");
+        user.setPassword(passwordEncoder.encode("password123"));
         user.setRole("ROLE_USER");
         userRepository.save(user);
         // 2. Create a Bus

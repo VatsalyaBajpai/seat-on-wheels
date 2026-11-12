@@ -2,7 +2,9 @@ package com.vatsalya.seatonwheels.controller;
 
 
 import com.vatsalya.seatonwheels.entity.Booking;
+import com.vatsalya.seatonwheels.entity.User;
 import com.vatsalya.seatonwheels.service.BookingService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.vatsalya.seatonwheels.dto.BookingResponseDTO;
@@ -21,11 +23,11 @@ public class BookingController {
 
     @PostMapping
     public BookingResponseDTO createBooking(
-            @RequestParam Long userId,
+            @AuthenticationPrincipal User user,
             @RequestParam Long tripSeatId
             )
     {
-        return bookingService.createBooking(userId,tripSeatId);
+        return bookingService.createBooking(user.getId(),tripSeatId);
     }
 
     @GetMapping("/user/{userId}")
@@ -36,8 +38,8 @@ public class BookingController {
     @PutMapping("/{bookingId}/cancel")
     public BookingResponseDTO cancelBooking(
             @PathVariable("bookingId") Long bookingId,
-            @RequestParam Long userId
+            @AuthenticationPrincipal User user
     ) {
-        return bookingService.cancelBooking(bookingId, userId);
+        return bookingService.cancelBooking(bookingId, user.getId());
     }
 }
